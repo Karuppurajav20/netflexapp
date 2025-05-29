@@ -13,7 +13,7 @@ html {
 }
 
 .bg-image {
-    background-image: url("images/background\ image.jpg");
+    background-image: url("/netflexapp/image/background\ image.jpg");
     position: relative;
     filter: blur(8px);
     -webkit-filter: blur(8px);
@@ -83,7 +83,7 @@ html {
 .hero {
     background:
         radial-gradient(ellipse at center, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.8) 100%),
-        url('images/background\ image.jpg') no-repeat center center/cover;
+        url('/netflexapp/image/background\ image.jpg ') no-repeat center center/cover;
     height: 500px;
     position: relative;
     display: flex;

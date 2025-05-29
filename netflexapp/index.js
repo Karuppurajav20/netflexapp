@@ -33,7 +33,7 @@ document.addEventListener("DOMContentLoaded", function () {
 function scrollCarousel(direction) {
   const carousel = document.getElementById("carousel");
   if (!carousel) return;
-  const scrollAmount = 400; // Adjust as needed for your card width
+  const scrollAmount = 400; 
   carousel.scrollBy({
     left: direction * scrollAmount,
     behavior: "smooth"
