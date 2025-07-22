@@ -1,4 +1,5 @@
 document.addEventListener("DOMContentLoaded", function () {
+  // --- Accordion logic ---
   const accordions = document.querySelectorAll('.accordion');
   const panels = document.querySelectorAll('.panel');
 
@@ -8,16 +9,17 @@ document.addEventListener("DOMContentLoaded", function () {
       const icon = accordion.querySelector('.icon');
       if (!panel || !icon) return;
 
-      panels.forEach((p, index) => {
-        if (index !== i) {
+      // Close all other panels
+      panels.forEach((p, j) => {
+        if (j !== i) {
           p.style.maxHeight = null;
           p.classList.remove('open');
-          const otherIcon = accordions[index].querySelector('.icon');
+          const otherIcon = accordions[j].querySelector('.icon');
           if (otherIcon) otherIcon.textContent = '+';
         }
       });
 
-   
+      // Toggle current panel
       if (panel.classList.contains('open')) {
         panel.style.maxHeight = null;
         panel.classList.remove('open');
@@ -29,57 +31,46 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
   });
-});
-function scrollCarousel(direction) {
+
+  // --- Carousel scroll arrows ---
   const carousel = document.getElementById("carousel");
-  if (!carousel) return;
-  const scrollAmount = 400; 
-  carousel.scrollBy({
-    left: direction * scrollAmount,
-    behavior: "smooth"
+  document.querySelectorAll(".scroll-btn").forEach(btn => {
+    btn.addEventListener("click", () => {
+      const direction = btn.dataset.direction === "left" ? -1 : 1;
+      if (!carousel) return;
+      carousel.scrollBy({
+        left: direction * 300,
+        behavior: "smooth"
+      });
+    });
   });
-}
 
-const modal = document.getElementById("myModal");
-const modalImg = document.getElementById("modalImage");
-const modalTitle = document.getElementById("modalTitle");
-const modalDesc = document.getElementById("modalDesc");
-const closeBtn = document.querySelector(".close");
-const carousel = document.getElementById("carousel");
+  // --- Modal logic ---
+  const modal = document.getElementById("myModal");
+  const modalImg = document.getElementById("modalImage");
+  const modalTitle = document.getElementById("modalTitle");
+  const modalDesc = document.getElementById("modalDesc");
+  const closeBtn = document.querySelector(".close");
 
-
-document.querySelectorAll(".movie-card").forEach(card => {
-  card.addEventListener("click", () => {
-    const imgSrc = card.getAttribute("data-img");
-    const title = card.getAttribute("data-title");
-    const desc = card.getAttribute("data-desc");
-
-    modalImg.src = imgSrc;
-    modalTitle.textContent = title + " • 2025 • U/A 16+ • Action • Dramas";
-    modalDesc.textContent = desc;
-
-    modal.style.display = "flex";
-    document.body.classList.add("modal-open");
+  document.querySelectorAll(".movie-card").forEach(card => {
+    card.addEventListener("click", () => {
+      modalImg.src = card.getAttribute("data-img");
+      modalTitle.textContent = `${card.getAttribute("data-title")} • 2025 • U/A 16+ • Action • Dramas`;
+      modalDesc.textContent = card.getAttribute("data-desc");
+      modal.style.display = "flex";
+      document.body.classList.add("modal-open");
+    });
   });
-});
 
-closeBtn.onclick = function () {
-  modal.style.display = "none";
-  document.body.classList.remove("modal-open");
-}
-window.onclick = function (event) {
-  if (event.target == modal) {
+  closeBtn.addEventListener("click", () => {
     modal.style.display = "none";
     document.body.classList.remove("modal-open");
-  }
-}
-
-// Scroll arrows
-function scrollCarousel(direction) {
-  const scrollAmount = 300;
-  carousel.scrollBy({
-    left: direction * scrollAmount,
-    behavior: "smooth"
   });
-}
-
+  
+  window.addEventListener("click", (e) => {
+    if (e.target === modal) {
+      modal.style.display = "none";
+      document.body.classList.remove("modal-open");
+    }
+  });
+});
